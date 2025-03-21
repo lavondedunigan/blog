@@ -8,7 +8,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
+          <a class="navbar-brand" href="#">Blogly</a>
           <button 
               class="navbar-toggler" type="button" 
               data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" 
@@ -21,6 +21,18 @@
               <a class="nav-link" href="{% url 'home' %}">Home</a>
               <a class="nav-link" href="{% url 'list' %}">About</a>
               <a class="nav-link" href="{% url 'new %}">New Posts</a>
+
+              {% if user_is_authenticated %}
+            <form method="POST" action="{% url 'logout %}">
+                {% csrf_token %}
+                <input type="submit" class="nav-link" value="Log Out">
+            </form>
+            {% else %}
+            <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+            <a class="nav-link" href="{% url 'login' %}">Log In</a>
+            {% endif %}
+
+
           </div>
           </div>
     </div>
@@ -39,7 +51,7 @@
       <div class="footer-links">
         <a href="/about">About Suave'</a>
         <a href="#">Contact Us</a>
-        <a href="#">Suave Policy</a>
+        <a href="#">Suave' Policy</a>
         <a href="#">Our Service Terms</a>
       </div>
     </div>
