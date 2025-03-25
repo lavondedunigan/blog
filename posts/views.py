@@ -31,7 +31,7 @@ class DraftPostListView(LoginRequiredMixin, ListView):
     model = Post
     
     def get_context_data(self, **kwargs):
-        context = super(),get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         draft = Status.objects.get(name="draft")
         context["title"] = "Draft"
         context["post_list"] = (
@@ -41,32 +41,45 @@ class DraftPostListView(LoginRequiredMixin, ListView):
             .order_by("created_on").reverse()
         )
         return context
+    
+              
 class ArchivePostListView(LoginRequiredMixin, ListView):
     template__name = "posts/list.html"
     model = Post
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        draft = Status.objects.get(name="draft")
-        context["title"] = "Draft"
+        archive = Status.objects.get(name="archive")
+        context["title"] = "Archive"
         context["post_list"] = (
             Post.get_objects
-            .filters(status=draft)
+            .filters(status=archive)
             .filter(author=self.request.user)
             .order_by("created_on").reverse()
         )
         return context
     
   
-class PostDetailView(DetailView):
+class PostDetailView(UserPassesTestMixin, DetailView):
     template_name = "posts/detail.html"
     model = Post 
+    
+    def test_func(self):
+        post = self.get_object()
+        if post.status.name == "published":
+            return True
+        elif post.status.name == "draft" and post.author == self.request.user:
+            return True
+        elif post.status.name == "archived" and self.request.user_is_authenticate:
+            return True
+        else:
+            return False
          
 class PostCreateView(LoginRequiredMixin, CreateView):
     template_name = "posts/new.html"
     model = Post
     fields = [
-        "title", "subtitle", "body", "author", "status"
+        "title", "subtitle", "body", "status"
         ]
     
     def form_valid(self, form):

@@ -1,0 +1,12 @@
+{% extends 'base,html %}
+
+
+{% block title %}Drafts{% endblock title %}
+
+{% block content %}
+<h1>Drafts</h1>
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" class="btn btn-danger" value="Confirm">
+</form>
+{% endblock content%}
