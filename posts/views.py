@@ -5,7 +5,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-from .models import Post, Status
+from pages.models import Post, Status
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import (
     LoginRequiredMixin,
@@ -91,7 +91,7 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "posts/edit.html"
     model = Post
     fields = [
-        "title", "subtitle", "body","status"
+        "title", "subtitle", "body", "status"
     ]
     
     def test_func(self):
