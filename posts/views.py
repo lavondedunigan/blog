@@ -5,7 +5,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-from pages.models import Post, Status
+from .models import Post, Status
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import (
     LoginRequiredMixin,

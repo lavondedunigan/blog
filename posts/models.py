@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
-
+# from .models import Post
 
 class Status(models.Model):
     name = models.CharField(max_length=128)
@@ -23,6 +23,7 @@ class Post(models.Model):
         on_delete=models.CASCADE
     )
     created_on = models.DateTimeField(auto_now_add=True)
+    
     
     def __str__(self):
         return self.title

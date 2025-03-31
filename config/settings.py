@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     # product
     "posts",
+    "blog"
 ]
 
 MIDDLEWARE = [
